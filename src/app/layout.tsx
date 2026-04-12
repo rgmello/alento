@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { ThemeProvider } from './contexts/ThemeContext';
+import { TypographyProvider } from './contexts/TypographyContext';
 import { Navigation } from './components/Navigation';
 import '../styles/index.css';
 
@@ -17,10 +18,12 @@ export default function RootLayout({
     <html lang="en" className="dark">
       <body>
         <ThemeProvider>
-          <div className="min-h-screen bg-background text-foreground">
-            <Navigation />
-            {children}
-          </div>
+          <TypographyProvider>
+            <div className="min-h-screen bg-background text-foreground">
+              <Navigation />
+              {children}
+            </div>
+          </TypographyProvider>
         </ThemeProvider>
       </body>
     </html>

@@ -2,12 +2,16 @@
 
 import { motion } from 'motion/react';
 import { Poem } from '../data/poems';
+import { useTypography } from '../contexts/TypographyContext';
 
 interface PoemDisplayProps {
   poem: Poem;
 }
 
 export function PoemDisplay({ poem }: PoemDisplayProps) {
+  const { typography } = useTypography();
+  const fontFamily = `var(--font-${typography})`;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -23,7 +27,7 @@ export function PoemDisplay({ poem }: PoemDisplayProps) {
           transition={{ delay: 0.2, duration: 0.6 }}
           className="space-y-3"
         >
-          <h1 className="text-3xl md:text-5xl tracking-tight text-foreground/90" style={{ fontFamily: 'var(--font-serif)' }}>
+          <h1 className="text-3xl md:text-5xl tracking-tight text-foreground/90" style={{ fontFamily }}>
             {poem.title}
           </h1>
           <div className="flex items-center gap-3 text-muted-foreground">
@@ -52,7 +56,7 @@ export function PoemDisplay({ poem }: PoemDisplayProps) {
               className={`text-lg md:text-xl leading-relaxed ${
                 verse === '' ? 'h-6' : 'text-foreground/80'
               }`}
-              style={{ fontFamily: 'var(--font-serif)' }}
+              style={{ fontFamily }}
             >
               {verse}
             </motion.p>

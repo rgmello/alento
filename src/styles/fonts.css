@@ -1,8 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,500;1,300;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@400;500&family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=Merriweather:ital,wght@0,300;0,400;1,300;1,400&display=swap');
 
 :root {
-  --font-serif: 'Crimson Pro', serif;
-  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-crimson: 'Crimson Pro', serif;
+  --font-lora: 'Lora', serif;
+  --font-merriweather: 'Merriweather', serif;
+  --font-garamond: 'EB Garamond', serif;
+  --font-inter: 'Inter', system-ui, sans-serif;
+  
+  --font-serif: var(--font-crimson);
+  --font-sans: var(--font-inter);
 }
 
 body {
