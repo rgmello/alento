@@ -1,14 +1,17 @@
+"use client";
+
 import { motion, AnimatePresence } from 'motion/react';
 import { useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router';
+import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
 import { ArrowLeft } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
-  const location = useLocation();
-  const navigate = useNavigate();
+  const pathname = usePathname();
+  const router = useRouter();
 
   const links = [
     { path: '/', label: 'Início' },
@@ -16,7 +19,7 @@ export function Navigation() {
     { path: '/authors', label: 'Autores' },
   ];
 
-  const showBackButton = location.pathname !== '/';
+  const showBackButton = pathname !== '/';
 
   return (
     <>
@@ -29,14 +32,14 @@ export function Navigation() {
           <div className="flex items-center gap-4">
             {showBackButton && (
               <button
-                onClick={() => navigate(-1)}
+                onClick={() => router.back()}
                 className="p-2 rounded-full hover:bg-muted/50 transition-colors text-foreground/60 hover:text-foreground"
                 aria-label="Voltar"
               >
                 <ArrowLeft className="w-5 h-5" />
               </button>
             )}
-            <Link to="/" className="text-lg tracking-wide text-foreground/80 hover:text-foreground transition-colors" style={{ fontFamily: 'var(--font-serif)' }}>
+            <Link href="/" className="text-lg tracking-wide text-foreground/80 hover:text-foreground transition-colors" style={{ fontFamily: 'var(--font-serif)' }}>
               Poemas
             </Link>
           </div>
@@ -100,10 +103,10 @@ export function Navigation() {
                   transition={{ delay: 0.1 + index * 0.1, duration: 0.4 }}
                 >
                   <Link
-                    to={link.path}
+                    href={link.path}
                     onClick={() => setIsOpen(false)}
                     className={`text-4xl md:text-6xl tracking-tight transition-colors ${
-                      location.pathname === link.path
+                      pathname === link.path
                         ? 'text-foreground'
                         : 'text-foreground/40 hover:text-foreground/70'
                     }`}

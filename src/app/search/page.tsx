@@ -1,9 +1,11 @@
+"use client";
+
 import { useState } from 'react';
 import { motion } from 'motion/react';
-import { Link } from 'react-router';
+import Link from 'next/link';
 import { searchPoems, Poem } from '../data/poems';
 
-export function Search() {
+export default function Search() {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<Poem[]>([]);
 
@@ -65,7 +67,7 @@ export function Search() {
               transition={{ delay: index * 0.05, duration: 0.4 }}
             >
               <Link
-                to={`/poem/${poem.id}`}
+                href={`/poem/${poem.id}`}
                 className="block py-6 border-b border-foreground/10 hover:border-foreground/20 transition-colors group"
               >
                 <h2 className="text-2xl tracking-tight mb-2 text-foreground/80 group-hover:text-foreground transition-colors" style={{ fontFamily: 'var(--font-serif)' }}>

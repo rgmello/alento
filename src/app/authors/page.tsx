@@ -1,8 +1,10 @@
+"use client";
+
 import { motion } from 'motion/react';
-import { Link } from 'react-router';
+import Link from 'next/link';
 import { getAuthors } from '../data/poems';
 
-export function Authors() {
+export default function Authors() {
   const authors = getAuthors();
 
   return (
@@ -36,7 +38,7 @@ export function Authors() {
               transition={{ delay: 0.1 + index * 0.05, duration: 0.4 }}
             >
               <Link
-                to={`/author/${encodeURIComponent(author)}`}
+                href={`/author/${encodeURIComponent(author)}`}
                 className="block py-6 border-b border-foreground/10 hover:border-foreground/20 transition-colors group"
               >
                 <h2 className="text-2xl tracking-tight text-foreground/70 group-hover:text-foreground transition-colors" style={{ fontFamily: 'var(--font-serif)' }}>

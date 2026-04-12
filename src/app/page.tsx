@@ -1,17 +1,27 @@
-import { useState } from 'react';
+"use client";
+
+import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { Shuffle } from 'lucide-react';
-import { PoemDisplay } from '../components/PoemDisplay';
-import { getRandomPoem, Poem } from '../data/poems';
+import { PoemDisplay } from './components/PoemDisplay';
+import { getRandomPoem, Poem } from './data/poems';
 
-export function Home() {
-  const [poem, setPoem] = useState<Poem>(getRandomPoem());
+export default function Home() {
+  const [poem, setPoem] = useState<Poem | null>(null);
   const [key, setKey] = useState(0);
+
+  useEffect(() => {
+    setPoem(getRandomPoem());
+  }, []);
 
   const handleNewPoem = () => {
     setPoem(getRandomPoem());
     setKey((prev) => prev + 1);
   };
+
+  if (!poem) {
+    return <div className="min-h-screen bg-background" />; // Retorna vazio durante a renderização no servidor para evitar Hydration Error
+  }
 
   return (
     <div className="min-h-screen relative">

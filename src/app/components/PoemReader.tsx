@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useRef } from 'react';
 import { motion, useMotionValue, useTransform, PanInfo } from 'motion/react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';

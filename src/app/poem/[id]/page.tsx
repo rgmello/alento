@@ -1,10 +1,12 @@
-import { useParams } from 'react-router';
-import { motion } from 'motion/react';
-import { getPoemById } from '../data/poems';
-import { PoemDisplay } from '../components/PoemDisplay';
+"use client";
 
-export function PoemPage() {
-  const { id } = useParams<{ id: string }>();
+import { use } from 'react';
+import { motion } from 'motion/react';
+import { getPoemById } from '../../data/poems';
+import { PoemDisplay } from '../../components/PoemDisplay';
+
+export default function PoemPage({ params }: { params: { id: string } }) {
+  const { id } = params;
   const poem = id ? getPoemById(id) : undefined;
 
   if (!poem) {

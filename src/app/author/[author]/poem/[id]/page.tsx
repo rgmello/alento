@@ -1,10 +1,13 @@
-import { useParams } from 'react-router';
-import { motion } from 'motion/react';
-import { getPoemsByAuthor, getPoemById } from '../data/poems';
-import { PoemReader } from '../components/PoemReader';
+"use client";
 
-export function AuthorPoemReader() {
-  const { author, id } = useParams<{ author: string; id: string }>();
+import { use } from 'react';
+import { motion } from 'motion/react';
+import { getPoemsByAuthor, getPoemById } from '../../../../data/poems';
+import { PoemReader } from '../../../../components/PoemReader';
+
+export default function AuthorPoemReader({ params }: { params: { author: string; id: string } }) {
+  const { author: rawAuthor, id } = params;
+  const author = decodeURIComponent(rawAuthor);
 
   if (!author || !id) {
     return (
@@ -20,7 +23,7 @@ export function AuthorPoemReader() {
     );
   }
 
-  const poems = getPoemsByAuthor(decodeURIComponent(author));
+  const poems = getPoemsByAuthor(author);
   const poem = getPoemById(id);
 
   if (!poem || poems.length === 0) {

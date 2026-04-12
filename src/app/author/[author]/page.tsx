@@ -1,10 +1,14 @@
-import { useParams, Link } from 'react-router';
-import { motion } from 'motion/react';
-import { getPoemsByAuthor } from '../data/poems';
+"use client";
 
-export function AuthorPoems() {
-  const { author } = useParams<{ author: string }>();
-  const poems = author ? getPoemsByAuthor(decodeURIComponent(author)) : [];
+import { use } from 'react';
+import Link from 'next/link';
+import { motion } from 'motion/react';
+import { getPoemsByAuthor } from '../../data/poems';
+
+export default function AuthorPoems({ params }: { params: { author: string } }) {
+  const { author: rawAuthor } = params;
+  const author = decodeURIComponent(rawAuthor);
+  const poems = author ? getPoemsByAuthor(author) : [];
 
   if (!author || poems.length === 0) {
     return (
@@ -34,7 +38,7 @@ export function AuthorPoems() {
           className="text-4xl md:text-5xl tracking-tight text-foreground/90 mb-12"
           style={{ fontFamily: 'var(--font-serif)' }}
         >
-          {decodeURIComponent(author)}
+          {author}
         </motion.h1>
 
         <motion.div
@@ -51,7 +55,7 @@ export function AuthorPoems() {
               transition={{ delay: index * 0.05, duration: 0.4 }}
             >
               <Link
-                to={`/author/${encodeURIComponent(author)}/poem/${poem.id}`}
+                href={`/author/${encodeURIComponent(author)}/poem/${poem.id}`}
                 className="block py-6 border-b border-foreground/10 hover:border-foreground/20 transition-colors group"
               >
                 <h2 className="text-2xl tracking-tight mb-2 text-foreground/70 group-hover:text-foreground transition-colors" style={{ fontFamily: 'var(--font-serif)' }}>
