@@ -300,3 +300,13 @@ export function getAuthors(): string[] {
 export function getPoemsByAuthor(author: string): Poem[] {
   return poems.filter((p) => p.author === author);
 }
+
+export function getShuffledPoemIds(): string[] {
+  const ids = poems.map(p => p.id);
+  // Fisher-Yates shuffle
+  for (let i = ids.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [ids[i], ids[j]] = [ids[j], ids[i]];
+  }
+  return ids;
+}

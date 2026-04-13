@@ -4,29 +4,58 @@ import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { Shuffle } from 'lucide-react';
 import { PoemDisplay } from './components/PoemDisplay';
-import { getRandomPoem, Poem } from './data/poems';
+import { getShuffledPoemIds, getPoemById, Poem } from './data/poems';
+
+interface PoemState {
+  current: Poem | null;
+  queue: string[];
+}
 
 export default function Home() {
-  const [poem, setPoem] = useState<Poem | null>(null);
+  const [poemState, setPoemState] = useState<PoemState>({ current: null, queue: [] });
   const [key, setKey] = useState(0);
 
   useEffect(() => {
-    setPoem(getRandomPoem());
+    const ids = getShuffledPoemIds();
+    if (ids.length > 0) {
+      setPoemState({
+        current: getPoemById(ids[0]) || null,
+        queue: ids.slice(1),
+      });
+    }
   }, []);
 
   const handleNewPoem = () => {
-    setPoem(getRandomPoem());
+    setPoemState((prev) => {
+      let nextQueue = [...prev.queue];
+      
+      if (nextQueue.length === 0) {
+        // A fila acabou, gera uma nova fila embaralhada
+        nextQueue = getShuffledPoemIds();
+        
+        // Evita repetir o mesmo poema que acabou de ser lido logo após o re-embaralhamento
+        if (prev.current && nextQueue.length > 1 && nextQueue[0] === prev.current.id) {
+          [nextQueue[0], nextQueue[1]] = [nextQueue[1], nextQueue[0]];
+        }
+      }
+      
+      const nextId = nextQueue.shift()!;
+      return {
+        current: getPoemById(nextId) || null,
+        queue: nextQueue,
+      };
+    });
     setKey((prev) => prev + 1);
   };
 
-  if (!poem) {
+  if (!poemState.current) {
     return <div className="min-h-screen bg-background" />; // Retorna vazio durante a renderização no servidor para evitar Hydration Error
   }
 
   return (
     <div className="min-h-screen relative">
       <motion.div key={key}>
-        <PoemDisplay poem={poem} />
+        <PoemDisplay poem={poemState.current} />
       </motion.div>
 
       <motion.div
