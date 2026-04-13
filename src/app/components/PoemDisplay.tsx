@@ -41,24 +41,24 @@ export function PoemDisplay({ poem }: PoemDisplayProps) {
           </div>
         </motion.div>
 
-        <motion.div
+          <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4, duration: 0.8 }}
           className="space-y-1 pt-6"
         >
-          {poem.verses.map((verse, index) => (
+          {poem.content.split('\n').map((line, index) => (
             <motion.p
               key={index}
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.5 + index * 0.03, duration: 0.4 }}
               className={`text-lg md:text-xl leading-relaxed ${
-                verse === '' ? 'h-6' : 'text-foreground/80'
+                line.trim() === '' ? 'h-6' : 'text-foreground/80'
               }`}
               style={{ fontFamily }}
             >
-              {verse}
+              {line}
             </motion.p>
           ))}
         </motion.div>
