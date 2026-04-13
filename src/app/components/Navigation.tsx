@@ -38,8 +38,11 @@ export function Navigation() {
                 <ArrowLeft className="w-5 h-5" />
               </button>
             )}
-            <Link href="/" className="text-lg tracking-wide text-foreground/80 hover:text-foreground transition-colors" style={{ fontFamily: 'var(--font-serif)' }}>
-              Poemas
+            <Link href="/" className="text-lg tracking-wide text-foreground/80 hover:text-foreground transition-colors flex items-center gap-2" style={{ fontFamily: 'var(--font-serif)' }}>
+              <svg width="24" height="24" viewBox="780 440 700 740" fill="currentColor" className="text-accent-foreground" preserveAspectRatio="xMidYMid meet">
+                <path d="M 1448.57 461.428 C 1451.24 461.063 1451.21 460.847 1453.65 461.861 C 1359.18 542.906 1343.8 676.428 1323.65 792.394 C 1282.81 1027.42 1133.8 1149.64 894.394 1158.88 C 944.436 1010.28 1011.81 873.339 1108.83 749.558 C 1124.44 729.644 1140.75 710.284 1157.73 691.514 C 1166.93 681.378 1178.6 670.1 1187.08 659.908 L 1187.8 659.033 C 1176.71 667.362 1167.21 675.298 1156.69 684.31 C 1020.26 799.578 915.987 965.085 849.713 1129.7 C 826.646 1082.14 812.295 1030.83 807.342 978.211 C 798.62 881.148 825.515 790.382 888.816 716.382 C 1015.96 567.749 1259.03 478.346 1448.57 461.428 z"/>
+              </svg>
+              Alento
             </Link>
           </div>
 

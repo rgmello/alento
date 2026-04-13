@@ -5,8 +5,21 @@ import { Navigation } from './components/Navigation';
 import '../styles/index.css';
 
 export const metadata: Metadata = {
-  title: 'Poetry App',
-  description: 'A beautiful poetry reading experience',
+  title: 'Alento | Poesia',
+  description: 'Um abraço no peito em forma de poesia.',
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
+    { media: '(prefers-color-scheme: dark)', color: '#252525' }
+  ],
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'Alento',
+  },
+  icons: {
+    icon: '/icon.svg',
+    apple: '/icon.svg',
+  },
 };
 
 export default function RootLayout({
