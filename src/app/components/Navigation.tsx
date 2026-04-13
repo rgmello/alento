@@ -39,7 +39,7 @@ export function Navigation() {
               </button>
             )}
             <Link href="/" className="text-lg tracking-wide text-foreground/80 hover:text-foreground transition-colors flex items-center gap-2" style={{ fontFamily: 'var(--font-serif)' }}>
-              <svg width="24" height="24" viewBox="780 440 700 740" fill="currentColor" className="text-accent-foreground" preserveAspectRatio="xMidYMid meet">
+              <svg width="24" height="24" viewBox="780 440 700 740" fill="currentColor" className="text-accent" preserveAspectRatio="xMidYMid meet">
                 <path d="M 1448.57 461.428 C 1451.24 461.063 1451.21 460.847 1453.65 461.861 C 1359.18 542.906 1343.8 676.428 1323.65 792.394 C 1282.81 1027.42 1133.8 1149.64 894.394 1158.88 C 944.436 1010.28 1011.81 873.339 1108.83 749.558 C 1124.44 729.644 1140.75 710.284 1157.73 691.514 C 1166.93 681.378 1178.6 670.1 1187.08 659.908 L 1187.8 659.033 C 1176.71 667.362 1167.21 675.298 1156.69 684.31 C 1020.26 799.578 915.987 965.085 849.713 1129.7 C 826.646 1082.14 812.295 1030.83 807.342 978.211 C 798.62 881.148 825.515 790.382 888.816 716.382 C 1015.96 567.749 1259.03 478.346 1448.57 461.428 z"/>
               </svg>
               Alento
@@ -49,7 +49,7 @@ export function Navigation() {
           <div className="flex items-center gap-4">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="p-2 rounded-full hover:bg-muted/50 transition-colors text-foreground/60 hover:text-foreground"
+              className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-muted/50 transition-colors text-foreground/60 hover:text-foreground"
               aria-label="Menu"
             >
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -91,7 +91,7 @@ export function Navigation() {
                   <Link
                     href={link.path}
                     onClick={() => setIsOpen(false)}
-                    className={`text-4xl md:text-6xl tracking-tight transition-colors ${
+                    className={`text-2xl tracking-tight transition-colors ${
                       pathname === link.path
                         ? 'text-foreground'
                         : 'text-foreground/40 hover:text-foreground/70'

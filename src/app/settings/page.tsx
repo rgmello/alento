@@ -3,16 +3,18 @@
 import { motion } from 'motion/react';
 import { useTheme } from '../contexts/ThemeContext';
 import { useTypography, TypographyOption } from '../contexts/TypographyContext';
+import { useFontSize, FontSizeOption } from '../contexts/FontSizeContext';
 
 export default function SettingsPage() {
   const { theme, setTheme } = useTheme();
   const { typography, setTypography } = useTypography();
+  const { fontSize, setFontSize } = useFontSize();
 
   const typographyOptions: { id: TypographyOption; label: string; description: string }[] = [
-    { id: 'crimson', label: 'Crimson Pro', description: 'Clássica e delicada (Padrão)' },
+    { id: 'garamond', label: 'EB Garamond', description: 'Estilo atemporal e histórico (Padrão)' },
+    { id: 'crimson', label: 'Crimson Pro', description: 'Clássica e delicada' },
     { id: 'lora', label: 'Lora', description: 'Contemporânea com excelente legibilidade' },
     { id: 'merriweather', label: 'Merriweather', description: 'Proporções largas, ótima para leitura' },
-    { id: 'garamond', label: 'EB Garamond', description: 'Estilo atemporal e histórico' },
     { id: 'inter', label: 'Inter', description: 'Visual limpo, moderno e sem serifa' },
   ];
 
@@ -31,7 +33,7 @@ export default function SettingsPage() {
           transition={{ delay: 0.2, duration: 0.6 }}
           className="space-y-3"
         >
-          <h1 className="text-3xl md:text-5xl tracking-tight text-foreground/90" style={{ fontFamily: 'var(--font-serif)' }}>
+          <h1 className="text-3xl md:text-4xl tracking-tight text-foreground/90" style={{ fontFamily: 'var(--font-serif)' }}>
             Configurações
           </h1>
           <p className="text-muted-foreground text-sm md:text-base">
@@ -45,13 +47,13 @@ export default function SettingsPage() {
           transition={{ delay: 0.3, duration: 0.6 }}
           className="space-y-6"
         >
-          <h2 className="text-xl font-medium tracking-tight text-foreground/80" style={{ fontFamily: 'var(--font-sans)' }}>Tema</h2>
+          <h2 className="text-lg font-medium tracking-tight text-foreground/80" style={{ fontFamily: 'var(--font-sans)' }}>Tema</h2>
           <div className="grid grid-cols-2 gap-4">
             <button
               onClick={() => setTheme('light')}
               className={`p-4 rounded-xl border text-left transition-all ${
                 theme === 'light' 
-                  ? 'border-foreground/50 bg-foreground/5 ring-1 ring-foreground/20' 
+                  ? 'border-accent bg-accent/10' 
                   : 'border-border hover:border-foreground/30 hover:bg-muted/30'
               }`}
             >
@@ -62,7 +64,7 @@ export default function SettingsPage() {
               onClick={() => setTheme('dark')}
               className={`p-4 rounded-xl border text-left transition-all ${
                 theme === 'dark' 
-                  ? 'border-foreground/50 bg-foreground/5 ring-1 ring-foreground/20' 
+                  ? 'border-accent bg-accent/10' 
                   : 'border-border hover:border-foreground/30 hover:bg-muted/30'
               }`}
             >
@@ -78,15 +80,15 @@ export default function SettingsPage() {
           transition={{ delay: 0.4, duration: 0.6 }}
           className="space-y-6"
         >
-          <h2 className="text-xl font-medium tracking-tight text-foreground/80" style={{ fontFamily: 'var(--font-sans)' }}>Tipografia dos Poemas</h2>
+          <h2 className="text-lg font-medium tracking-tight text-foreground/80" style={{ fontFamily: 'var(--font-sans)' }}>Tipografia dos Poemas</h2>
           <div className="grid grid-cols-1 gap-4">
             {typographyOptions.map((option) => (
               <button
                 key={option.id}
                 onClick={() => setTypography(option.id)}
-                className={`p-5 rounded-xl border text-left transition-all flex flex-col gap-2 ${
+                className={`p-4 rounded-xl border text-left transition-all flex flex-col gap-2 ${
                   typography === option.id 
-                    ? 'border-foreground/50 bg-foreground/5 ring-1 ring-foreground/20' 
+                    ? 'border-accent bg-accent/10' 
                     : 'border-border hover:border-foreground/30 hover:bg-muted/30'
                 }`}
               >
@@ -99,6 +101,32 @@ export default function SettingsPage() {
                   style={{ fontFamily: `var(--font-${option.id})` }}
                 >
                   A vida é um poema que se escreve a cada instante.
+                </div>
+              </button>
+            ))}
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5, duration: 0.6 }}
+          className="space-y-6"
+        >
+          <h2 className="text-lg font-medium tracking-tight text-foreground/80" style={{ fontFamily: 'var(--font-sans)' }}>Tamanho do Texto</h2>
+          <div className="grid grid-cols-3 gap-4">
+            {(['small', 'base', 'large'] as FontSizeOption[]).map((size) => (
+              <button
+                key={size}
+                onClick={() => setFontSize(size)}
+                className={`p-4 rounded-xl border text-center transition-all ${
+                  fontSize === size 
+                    ? 'border-accent bg-accent/10' 
+                    : 'border-border hover:border-foreground/30 hover:bg-muted/30'
+                }`}
+              >
+                <div className="font-medium">
+                  {size === 'small' ? 'Pequeno' : size === 'base' ? 'Padrão' : 'Grande'}
                 </div>
               </button>
             ))}

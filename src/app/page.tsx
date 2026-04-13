@@ -29,18 +29,24 @@ export default function Home() {
         <PoemDisplay poem={poem} />
       </motion.div>
 
-      <motion.button
+      <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.8, duration: 0.6 }}
-        whileHover={{ scale: 1.1, opacity: 0.8 }}
-        whileTap={{ scale: 0.9 }}
-        onClick={handleNewPoem}
-        className="fixed bottom-8 right-8 p-3 rounded-full bg-foreground/5 hover:bg-foreground/10 text-foreground/50 hover:text-foreground/70 transition-all backdrop-blur-sm border border-foreground/10"
-        aria-label="Poema aleatório"
+        className="fixed bottom-0 left-0 right-0 z-40 pointer-events-none pb-8 px-6 md:px-12"
       >
-        <Shuffle className="w-5 h-5" />
-      </motion.button>
+        <div className="max-w-7xl mx-auto flex justify-end">
+          <motion.button
+            whileHover={{ scale: 1.1, opacity: 0.8 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={handleNewPoem}
+            className="flex items-center justify-center w-10 h-10 rounded-full bg-foreground/5 hover:bg-foreground/10 text-foreground/50 hover:text-foreground/70 transition-all backdrop-blur-sm border border-foreground/10 pointer-events-auto"
+            aria-label="Poema aleatório"
+          >
+            <Shuffle className="w-5 h-5" />
+          </motion.button>
+        </div>
+      </motion.div>
     </div>
   );
 }

@@ -12,7 +12,7 @@ interface TypographyContextType {
 const TypographyContext = createContext<TypographyContextType | undefined>(undefined);
 
 export function TypographyProvider({ children }: { children: ReactNode }) {
-  const [typography, setTypography] = useState<TypographyOption>('crimson');
+  const [typography, setTypography] = useState<TypographyOption>('garamond');
 
   return (
     <TypographyContext.Provider value={{ typography, setTypography }}>

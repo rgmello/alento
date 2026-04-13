@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { TypographyProvider } from './contexts/TypographyContext';
+import { FontSizeProvider } from './contexts/FontSizeContext';
 import { Navigation } from './components/Navigation';
 import '../styles/index.css';
 
@@ -32,10 +33,12 @@ export default function RootLayout({
       <body>
         <ThemeProvider>
           <TypographyProvider>
-            <div className="min-h-screen bg-background text-foreground">
-              <Navigation />
-              {children}
-            </div>
+            <FontSizeProvider>
+              <div className="min-h-screen bg-background text-foreground">
+                <Navigation />
+                {children}
+              </div>
+            </FontSizeProvider>
           </TypographyProvider>
         </ThemeProvider>
       </body>
