@@ -9,7 +9,11 @@ export async function deletePoem(formData: FormData) {
   if (!id) return
 
   const supabase = createClient()
-  await supabase.from('poems').delete().eq('id', id)
+  const { error } = await supabase.from('poems').delete().eq('id', id)
+
+  if (error) {
+    throw new Error(error.message)
+  }
 
   revalidatePath('/')
   revalidatePath('/authors')
@@ -30,10 +34,18 @@ export async function savePoem(formData: FormData) {
     type: formData.get('type') as string || 'poem',
   }
 
+  let dbError = null
+
   if (id) {
-    await supabase.from('poems').update(data).eq('id', id)
+    const { error } = await supabase.from('poems').update(data).eq('id', id)
+    dbError = error
   } else {
-    await supabase.from('poems').insert([data])
+    const { error } = await supabase.from('poems').insert([data])
+    dbError = error
+  }
+
+  if (dbError) {
+    redirect(`/admin?error=${encodeURIComponent(dbError.message)}`)
   }
 
   revalidatePath('/')
@@ -41,5 +53,5 @@ export async function savePoem(formData: FormData) {
   revalidatePath('/search')
   revalidatePath('/admin')
   
-  redirect('/admin')
+  redirect('/admin?success=saved')
 }
