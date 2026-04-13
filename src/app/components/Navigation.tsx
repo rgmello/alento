@@ -16,6 +16,7 @@ export function Navigation() {
     { path: '/search', label: 'Buscar' },
     { path: '/authors', label: 'Autores' },
     { path: '/settings', label: 'Configurações' },
+    { path: '/admin', label: 'Administrador' },
   ];
 
   const showBackButton = pathname !== '/';

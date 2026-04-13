@@ -21,8 +21,15 @@ export async function login(formData: FormData) {
 
   if (error) {
     console.error(`[AUTH ERROR] Falha no login para ${email}:`, error.message, error.status, error.name)
-    // Retornamos a mensagem de erro específica do Supabase para ajudar no debug
-    redirect(`/login?error=${encodeURIComponent(error.message || 'Falha no login')}`)
+    // Traduzindo e retornando a mensagem de erro específica
+    let translatedError = error.message
+    if (error.message === 'Invalid login credentials') {
+      translatedError = 'E-mail ou senha incorretos.'
+    } else if (error.message === 'Email not confirmed') {
+      translatedError = 'E-mail ainda não confirmado.'
+    }
+    
+    redirect(`/login?error=${encodeURIComponent(translatedError)}`)
   }
 
   console.log(`[AUTH SUCCESS] Login bem-sucedido para: ${authData.user?.email} (ID: ${authData.user?.id})`)
