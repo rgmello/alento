@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import Link from 'next/link';
 import { searchPoems, Poem } from '../data/poems';
@@ -9,13 +9,20 @@ export default function Search() {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<Poem[]>([]);
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (query.trim().length > 1) {
+        searchPoems(query).then(setResults);
+      } else {
+        setResults([]);
+      }
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [query]);
+
   const handleSearch = (value: string) => {
     setQuery(value);
-    if (value.trim().length > 1) {
-      setResults(searchPoems(value));
-    } else {
-      setResults([]);
-    }
   };
 
   return (

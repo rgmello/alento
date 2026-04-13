@@ -4,6 +4,9 @@ const nextConfig = {
   transpilePackages: ['lucide-react', 'recharts'],
   images: {
     unoptimized: true // Since it was Vite, it probably has no specific Next.js image optimization in mind yet.
+  },
+  experimental: {
+    serverActions: true,
   }
 };
 

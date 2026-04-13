@@ -1,11 +1,16 @@
 "use client";
 
+import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import Link from 'next/link';
 import { getAuthors } from '../data/poems';
 
 export default function Authors() {
-  const authors = getAuthors();
+  const [authors, setAuthors] = useState<string[]>([]);
+
+  useEffect(() => {
+    getAuthors().then(setAuthors);
+  }, []);
 
   return (
     <div className="min-h-screen px-6 py-24 md:px-12">

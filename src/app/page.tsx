@@ -15,35 +15,38 @@ export default function Home() {
   const [poemState, setPoemState] = useState<PoemState>({ current: null, queue: [] });
   const [key, setKey] = useState(0);
 
-  useEffect(() => {
-    const ids = getShuffledPoemIds();
+  const initQueue = async () => {
+    const ids = await getShuffledPoemIds();
     if (ids.length > 0) {
+      const firstPoem = await getPoemById(ids[0]);
       setPoemState({
-        current: getPoemById(ids[0]) || null,
+        current: firstPoem,
         queue: ids.slice(1),
       });
     }
+  };
+
+  useEffect(() => {
+    initQueue();
   }, []);
 
-  const handleNewPoem = () => {
-    setPoemState((prev) => {
-      let nextQueue = [...prev.queue];
+  const handleNewPoem = async () => {
+    let nextQueue = [...poemState.queue];
+    
+    if (nextQueue.length === 0) {
+      nextQueue = await getShuffledPoemIds();
       
-      if (nextQueue.length === 0) {
-        // A fila acabou, gera uma nova fila embaralhada
-        nextQueue = getShuffledPoemIds();
-        
-        // Evita repetir o mesmo poema que acabou de ser lido logo após o re-embaralhamento
-        if (prev.current && nextQueue.length > 1 && nextQueue[0] === prev.current.id) {
-          [nextQueue[0], nextQueue[1]] = [nextQueue[1], nextQueue[0]];
-        }
+      if (poemState.current && nextQueue.length > 1 && nextQueue[0] === poemState.current.id) {
+        [nextQueue[0], nextQueue[1]] = [nextQueue[1], nextQueue[0]];
       }
-      
-      const nextId = nextQueue.shift()!;
-      return {
-        current: getPoemById(nextId) || null,
-        queue: nextQueue,
-      };
+    }
+    
+    const nextId = nextQueue.shift()!;
+    const nextPoem = await getPoemById(nextId);
+    
+    setPoemState({
+      current: nextPoem,
+      queue: nextQueue,
     });
     setKey((prev) => prev + 1);
   };

@@ -1,13 +1,27 @@
 "use client";
 
-import { use } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
-import { getPoemById } from '../../data/poems';
+import { getPoemById, Poem } from '../../data/poems';
 import { PoemDisplay } from '../../components/PoemDisplay';
 
 export default function PoemPage({ params }: { params: { id: string } }) {
   const { id } = params;
-  const poem = id ? getPoemById(id) : undefined;
+  const [poem, setPoem] = useState<Poem | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (id) {
+      getPoemById(id).then((data) => {
+        setPoem(data);
+        setLoading(false);
+      });
+    }
+  }, [id]);
+
+  if (loading) {
+    return <div className="min-h-screen bg-background" />;
+  }
 
   if (!poem) {
     return (

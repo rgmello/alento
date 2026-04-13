@@ -1,14 +1,28 @@
 "use client";
 
-import { use } from 'react';
+import { use, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'motion/react';
-import { getPoemsByAuthor } from '../../data/poems';
+import { getPoemsByAuthor, Poem } from '../../data/poems';
 
 export default function AuthorPoems({ params }: { params: { author: string } }) {
   const { author: rawAuthor } = params;
   const author = decodeURIComponent(rawAuthor);
-  const poems = author ? getPoemsByAuthor(author) : [];
+  const [poems, setPoems] = useState<Poem[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (author) {
+      getPoemsByAuthor(author).then((data) => {
+        setPoems(data);
+        setLoading(false);
+      });
+    }
+  }, [author]);
+
+  if (loading) {
+    return <div className="min-h-screen bg-background" />;
+  }
 
   if (!author || poems.length === 0) {
     return (
